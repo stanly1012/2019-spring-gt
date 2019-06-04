@@ -16,7 +16,8 @@ NetworkManager *nm = new NetworkManager();
 
 int main(int argc, char** argv){
     int vertexcount;
-    int j;
+    int j,k;
+    int degree;
     Vertex *node;
     vector<Vertex*> name;
     //int name[10];
@@ -45,11 +46,15 @@ int main(int argc, char** argv){
     }
     vertexcount=name.size();
     
-    /*for(j=0; j<vertexcount; j++){
-        if(nm->connected("*name[j]","*name[j+1]")==0)*/
-    
-    
-    cout<<name[0];
-    cout<<nm->get_node("a");
+    for(j=0; j<vertexcount; j++){
+        for(k=0; k<vertexcount; k++){
+            if(nm->connected(name[j]->name,name[k]->name)==0)
+                degree+=1;
+        }
+    }
+
+ 
+    cout<<degree;
+
     return 0;
 }

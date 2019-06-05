@@ -4,11 +4,11 @@ a c
 c a
 b c
 c b
-c e
-e c
 b e
 e b
 e d
 d e
 c d
 d c
+c e
+e c

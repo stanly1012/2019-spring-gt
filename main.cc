@@ -17,12 +17,14 @@ NetworkManager *nm = new NetworkManager();
 
 int main(int argc, char** argv){
     int vertexcount;
-    int j,k;
+    int b=0;
     int a=0;
     int degree[10];
-    vector<Vertex*> oddvertex;
     Vertex *node;
     vector<Vertex*> name;
+    vector<Vertex*> oddvertex;
+    vector<Vertex*> finalpath;
+    vector<Vertex*> recordpath;
     nm->interpret("topo.txt");
  /////////////////////////////////////////////catch vertex
     node = nm->get_all_nodes();
@@ -34,17 +36,17 @@ int main(int argc, char** argv){
 ////////////////////////////////////////////////find odd vertex     
     
 
-    for(j=0; j<vertexcount; j++){
+    for(int j=0; j<vertexcount; j++){
         degree[j]=0;
         
-        for(k=0; k<vertexcount; k++){
+        for(int k=0; k<vertexcount; k++){
             if(nm->connected(name[j]->name,name[k]->name)==0)
                 degree[j]+=1;
         }        
            
         if(degree[j]%2==1){            
         oddvertex.push_back(name[j]);
-  
+        
         }
     }
 ////////////////////////////////////////////////////add the edge between two odd vertex
@@ -56,11 +58,20 @@ int main(int argc, char** argv){
 
     
 ////////////////////////////////////////euler path
-
-
-
-
-
+    while(b<vertexcount){  
+        int k;
+        for(k=0; k<vertexcount; k++){
+            if(nm->connected(name[b]->name,name[k]->name)==0){
+                recordpath.push_back(name[b]);  
+                nm->linkdown(name[b],name[k]);
+                nm->linkdown(name[k],name[b]);
+                break;
+            }                  
+        }
+        b=k;        
+    }
+    
+    
 /////////////////////////////////////////////// 
 
     cout<<degree[0]<<endl;
@@ -68,16 +79,11 @@ int main(int argc, char** argv){
     cout<<degree[2]<<endl;
     cout<<degree[3]<<endl;
     cout<<degree[4]<<endl;
-    /*cout<<oddvertex[0]->name<<endl;
-    cout<<oddvertex[1]->name<<endl;
-    cout<<oddvertex[2]->name<<endl;
-    cout<<oddvertex[3]->name<<endl;
-    cout<<oddvertex[4]->name<<endl;*/
-
-    
-    cout<<a<<endl;
- 
-
+    cout<<recordpath.at(0)->name<<endl;
+    cout<<recordpath.at(1)->name<<endl;
+    cout<<recordpath.at(2)->name<<endl;
+    cout<<recordpath.at(3)->name<<endl;
+    cout<<recordpath.at(4)->name<<endl;
     nm->print_all_e();
     
     

@@ -1,14 +1,8 @@
 a b
-b a
-a c
-c a
 b c
-c b
-b e
+c a
 e b
-e d
-d e
-c d
-d c
-c e
 e c
+c d
+d e
+

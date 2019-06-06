@@ -61,21 +61,39 @@ int main(int argc, char** argv){
     while(b<vertexcount){  
         int k;
         int q;
+        int g;
+        int t=0;
         for(k=0; k<vertexcount; k++){
-            if(nm->connected(name[b]->name,name[k]->name)==0){            
-                q=+1;
-                recordpath.push_back(name[b]);  
-                nm->linkdown(name[b],name[k]);
-                nm->linkdown(name[k],name[b]);
+            if(nm->connected(name[b]->name,name[k]->name)==0){
+                recordpath.push_back(name[b]);
+                nm->linkdown(name[b],name[k]);  
+
+                //nm->linkdown(name[k],name[b]);
+                /*if(name[k]>name[b]){
+                    nm->linkdown(name[b],name[k]);
+                    nm->linkdown(name[k],name[b]);
+                }
+                else{
+                    nm->linkdown(name[k],name[b]);
+                    nm->linkdown(name[b],name[k]);
+                }*/
                 break;
-            }
-            //else if(q==0)
-               // finalpath.push_back(recordpath.at(b));
+            }    
+            //cout<<k<<endl;
+            if(k==4){
+                //recordpath.push_back(name[b]);
+                finalpath.push_back(name[b]);
                 
+            }
+
         }
-        cout<<k<<endl;
-        b=k; 
-        q=0;
+
+        if(k==5)
+            b=recordpath.size();
+        else
+        b=k;
+        //cout<<k<<endl;
+
     }
     
     
@@ -86,6 +104,7 @@ int main(int argc, char** argv){
     cout<<degree[2]<<endl;
     cout<<degree[3]<<endl;
     cout<<degree[4]<<endl;*/
+    cout<<recordpath.size()<<endl;
     cout<<recordpath.at(0)->name<<endl;
     cout<<recordpath.at(1)->name<<endl;
     cout<<recordpath.at(2)->name<<endl;
@@ -96,9 +115,12 @@ int main(int argc, char** argv){
     cout<<recordpath.at(7)->name<<endl;
     cout<<recordpath.at(8)->name<<endl;
     cout<<recordpath.at(9)->name<<endl;
-    cout<<recordpath.at(10)->name<<endl;
+    cout<<finalpath.size()<<endl;    
+    cout<<finalpath.at(0)->name<<endl;
+    cout<<finalpath.at(1)->name<<endl;
     nm->print_all_e();
     
+   
     
     Gplot *gp = new Gplot();
     gp->gp_add(nm->elist);

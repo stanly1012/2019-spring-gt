@@ -60,30 +60,43 @@ int main(int argc, char** argv){
 ////////////////////////////////////////euler path
     while(b<vertexcount){  
         int k;
+        int q;
         for(k=0; k<vertexcount; k++){
-            if(nm->connected(name[b]->name,name[k]->name)==0){
+            if(nm->connected(name[b]->name,name[k]->name)==0){            
+                q=+1;
                 recordpath.push_back(name[b]);  
                 nm->linkdown(name[b],name[k]);
                 nm->linkdown(name[k],name[b]);
                 break;
-            }                  
+            }
+            //else if(q==0)
+               // finalpath.push_back(recordpath.at(b));
+                
         }
-        b=k;        
+        cout<<k<<endl;
+        b=k; 
+        q=0;
     }
     
     
 /////////////////////////////////////////////// 
 
-    cout<<degree[0]<<endl;
+    /*cout<<degree[0]<<endl;
     cout<<degree[1]<<endl;
     cout<<degree[2]<<endl;
     cout<<degree[3]<<endl;
-    cout<<degree[4]<<endl;
+    cout<<degree[4]<<endl;*/
     cout<<recordpath.at(0)->name<<endl;
     cout<<recordpath.at(1)->name<<endl;
     cout<<recordpath.at(2)->name<<endl;
     cout<<recordpath.at(3)->name<<endl;
     cout<<recordpath.at(4)->name<<endl;
+    cout<<recordpath.at(5)->name<<endl;
+    cout<<recordpath.at(6)->name<<endl;
+    cout<<recordpath.at(7)->name<<endl;
+    cout<<recordpath.at(8)->name<<endl;
+    cout<<recordpath.at(9)->name<<endl;
+    cout<<recordpath.at(10)->name<<endl;
     nm->print_all_e();
     
     

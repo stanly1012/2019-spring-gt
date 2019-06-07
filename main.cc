@@ -59,10 +59,8 @@ int main(int argc, char** argv){
     
 ////////////////////////////////////////euler path
     while(b<vertexcount){  
+        int q=0;
         int k;
-        int q;
-        int g;
-        int t=0;
         for(k=0; k<vertexcount; k++){
             if(nm->connected(name[b]->name,name[k]->name)==0){
                 recordpath.push_back(name[b]);
@@ -78,20 +76,34 @@ int main(int argc, char** argv){
                     nm->linkdown(name[b],name[k]);
                 }*/
                 break;
-            }    
-            //cout<<k<<endl;
-            if(k==4){
-                //recordpath.push_back(name[b]);
+            } 
+            else if (nm->elist==0){
+                cout<<"whether is last one:"<<b<<endl;
+                recordpath.push_back(name[b]);
+                q=2;
+                break;
+            }            
+            else if(k==4&&b!=4){                
+                recordpath.erase(recordpath.end()-1);
                 finalpath.push_back(name[b]);
-                
+                q=1;
+                break;
             }
 
-        }
 
-        if(k==5)
+        }
+        cout<<"whether repeat:"<<q<<endl;
+        if(q==1){
             b=recordpath.size();
-        else
-        b=k;
+            cout<<"repeat b:"<<b<<endl;
+        }
+        else if(q==2){
+            b=5;
+        }
+        else{
+            cout<<"no repeat b:"<<k<<endl;
+            b=k;
+        }    
         //cout<<k<<endl;
 
     }
@@ -104,7 +116,7 @@ int main(int argc, char** argv){
     cout<<degree[2]<<endl;
     cout<<degree[3]<<endl;
     cout<<degree[4]<<endl;*/
-    cout<<recordpath.size()<<endl;
+    cout<<"recordpath size:"<<recordpath.size()<<endl;
     cout<<recordpath.at(0)->name<<endl;
     cout<<recordpath.at(1)->name<<endl;
     cout<<recordpath.at(2)->name<<endl;
@@ -114,10 +126,10 @@ int main(int argc, char** argv){
     cout<<recordpath.at(6)->name<<endl;
     cout<<recordpath.at(7)->name<<endl;
     cout<<recordpath.at(8)->name<<endl;
-    cout<<recordpath.at(9)->name<<endl;
-    cout<<finalpath.size()<<endl;    
+    //cout<<recordpath.at(9)->name<<endl;
+    cout<<"finalpath size:"<<finalpath.size()<<endl;    
     cout<<finalpath.at(0)->name<<endl;
-    cout<<finalpath.at(1)->name<<endl;
+    //cout<<finalpath.at(1)->name<<endl;
     nm->print_all_e();
     
    

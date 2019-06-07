@@ -25,6 +25,7 @@ int main(int argc, char** argv){
     vector<Vertex*> oddvertex;
     vector<Vertex*> finalpath;
     vector<Vertex*> recordpath;
+    vector<Vertex*> result;
     nm->interpret("topo.txt");
  /////////////////////////////////////////////catch vertex
     node = nm->get_all_nodes();
@@ -58,57 +59,61 @@ int main(int argc, char** argv){
 
     
 ////////////////////////////////////////euler path
-    while(b<vertexcount){  
+
+   while(b<vertexcount){    
         int q=0;
         int k;
         for(k=0; k<vertexcount; k++){
             if(nm->connected(name[b]->name,name[k]->name)==0){
                 recordpath.push_back(name[b]);
                 nm->linkdown(name[b],name[k]);  
-
-                //nm->linkdown(name[k],name[b]);
-                /*if(name[k]>name[b]){
-                    nm->linkdown(name[b],name[k]);
-                    nm->linkdown(name[k],name[b]);
-                }
-                else{
-                    nm->linkdown(name[k],name[b]);
-                    nm->linkdown(name[b],name[k]);
-                }*/
                 break;
             } 
             else if (nm->elist==0){
-                cout<<"whether is last one:"<<b<<endl;
                 recordpath.push_back(name[b]);
                 q=2;
                 break;
             }            
-            else if(k==4&&b!=4){                
+            else if(k==4){                
                 recordpath.erase(recordpath.end()-1);
                 finalpath.push_back(name[b]);
                 q=1;
                 break;
             }
-
-
         }
-        cout<<"whether repeat:"<<q<<endl;
+        cout<<"whether repeat or the end:"<<q<<endl;
         if(q==1){
             b=recordpath.size();
             cout<<"repeat b:"<<b<<endl;
         }
         else if(q==2){
-            b=5;
+            break;
         }
         else{
             cout<<"no repeat b:"<<k<<endl;
             b=k;
-        }    
-        //cout<<k<<endl;
-
+        }
+ 
     }
     
+    for(int v=0; v<finalpath.size(); v++){
+        result.insert(result.begin(),finalpath.at(v));
+    }
     
+    for(int w=recordpath.size()-1; w>-1; w--){
+        result.insert(result.end(),recordpath.at(w));
+    }
+    
+    cout<<"final result size:"<<result.size()<<endl;
+    cout<<"final result:"<<result.at(0)->name<<endl;
+    cout<<"final result:"<<result.at(1)->name<<endl;
+    cout<<"final result:"<<result.at(2)->name<<endl;
+    cout<<"final result:"<<result.at(3)->name<<endl;
+    cout<<"final result:"<<result.at(4)->name<<endl;
+    cout<<"final result:"<<result.at(5)->name<<endl;
+    cout<<"final result:"<<result.at(6)->name<<endl;
+    cout<<"final result:"<<result.at(7)->name<<endl;
+    cout<<"final result:"<<result.at(8)->name<<endl;
 /////////////////////////////////////////////// 
 
     /*cout<<degree[0]<<endl;

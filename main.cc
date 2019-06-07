@@ -121,7 +121,7 @@ int main(int argc, char** argv){
     cout<<degree[2]<<endl;
     cout<<degree[3]<<endl;
     cout<<degree[4]<<endl;*/
-    cout<<"recordpath size:"<<recordpath.size()<<endl;
+    /*cout<<"recordpath size:"<<recordpath.size()<<endl;
     cout<<recordpath.at(0)->name<<endl;
     cout<<recordpath.at(1)->name<<endl;
     cout<<recordpath.at(2)->name<<endl;
@@ -129,13 +129,13 @@ int main(int argc, char** argv){
     cout<<recordpath.at(4)->name<<endl;
     cout<<recordpath.at(5)->name<<endl;
     cout<<recordpath.at(6)->name<<endl;
-    cout<<recordpath.at(7)->name<<endl;
+    cout<<recordpath.at(7)->name<<endl;*/
     //cout<<recordpath.at(8)->name<<endl;
     //cout<<recordpath.at(9)->name<<endl;
-    cout<<"finalpath size:"<<finalpath.size()<<endl;    
-    cout<<finalpath.at(0)->name<<endl;
+    /*cout<<"finalpath size:"<<finalpath.size()<<endl;    
+    cout<<finalpath.at(0)->name<<endl;*/
     //cout<<finalpath.at(1)->name<<endl;
-    nm->print_all_e();
+    //nm->print_all_e();
     
    
     

@@ -20,6 +20,7 @@ int main(int argc, char** argv){
     int vertexcount;
     int b=0;
     int a=0;
+    int e=0;
     int degree[10];
     Vertex *node;
     vector<Vertex*> name;
@@ -54,46 +55,65 @@ int main(int argc, char** argv){
     }
 ////////////////////////////////////////////////////add the edge between two odd vertex
    
-  while(a<oddvertex.size()){
+  /*while(a<oddvertex.size()){
     nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
     a+=2;
-    }
+    }*/
 //////////////////////////////////////////add the edge with dijkstra
-    /*cout<<"number of odd:"<<oddvertex.size()<<endl;
+    cout<<"number of odd:"<<oddvertex.size()<<endl;
     if(oddvertex.size()==2){
         nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
         }
-    else{
-        for(int j=0; j<vertexcount; j++){
+    else if(oddvertex.size()>2){
+        for(int j=0; j<oddvertex.size(); j++){
             for(int k=0; k<vertexcount; k++){
                 int pathdistance[10];
-                int q;
                 if(nm->connected(oddvertex.at(j)->name,name.at(k)->name)==0){                
-                    havepath.push_back(name[k]);
-                    pathdistance[q]=j+1;
-                    q=+1;
-                    nm->linkdown(oddvertex[j],name[k]);
-                    nm->linkdown(name[k],oddvertex[j]);
-                    
+                    havepath.insert(havepath.end(),name[k]);
+                    pathdistance[havepath.size()-1]=j+1;
+                    if(nm->connected_d(oddvertex[j]->name,name[k]->name)==0){
+                        nm->linkdown(oddvertex[j],name[k]);
+                    }
+                    else if(nm->connected_d(name[k]->name,oddvertex[j]->name)==0){
+                        nm->linkdown(name[k],oddvertex[j]);
+                    }
+                    nm->print_all_e();
                     cout<<"path vertex size:"<<havepath.size()<<endl;                
                     cout<<"distance:"<<pathdistance[0]<<endl;
                     cout<<"distance:"<<pathdistance[1]<<endl;
                     cout<<"distance:"<<pathdistance[2]<<endl;
+                    cout<<"distance:"<<pathdistance[3]<<endl;
+                    cout<<"distance:"<<pathdistance[4]<<endl;
+                    cout<<"distance:"<<pathdistance[5]<<endl;
+                    cout<<"distance:"<<pathdistance[6]<<endl;
+                    cout<<"distance:"<<pathdistance[7]<<endl;
                 }
 
             }
+   
         }
-                    cout<<"path vertex:"<<havepath.at(0)->name<<endl;
-                    cout<<"path vertex:"<<havepath.at(1)->name<<endl;
-                    cout<<"path vertex:"<<havepath.at(2)->name<<endl;
-                    cout<<"path vertex:"<<havepath.at(3)->name<<endl;
-                    cout<<"path vertex:"<<havepath.at(4)->name<<endl;
-                    cout<<"path vertex:"<<havepath.at(5)->name<<endl;
-                    cout<<"path vertex:"<<havepath.at(6)->name<<endl;
+        nm->interpret("topo.txt");
+        while(e<oddvertex.size()-1){
+            int d;
+            for(d=0; d<havepath.size(); d++){
+                if(oddvertex.at(e+1)==havepath.at(d)) {
+                    nm->connect(oddvertex.at(e)->name,oddvertex.at(e+1)->name);
+                    break;
+                }
+            }
+            
+            if(e-d==0){
+                e=e+2;
+            }    
+            else{
+                e=e+1;
+            }     
+        }
+            
+
         
-    }*/
-                    
-                    
+    }
+
 ////////////////////////////////////////euler path
 
    while(b<vertexcount){    
@@ -159,6 +179,7 @@ int main(int argc, char** argv){
     cout<<"final result:"<<result.at(8)->name<<endl;
     cout<<"final result:"<<result.at(9)->name<<endl;
     cout<<"final result:"<<result.at(10)->name<<endl;
+    cout<<"final result:"<<result.at(11)->name<<endl;
 /////////////////////////////////////////////// 
 
     /*cout<<degree[0]<<endl;
@@ -180,8 +201,8 @@ int main(int argc, char** argv){
     /*cout<<"finalpath size:"<<finalpath.size()<<endl;    
     cout<<finalpath.at(0)->name<<endl;
     cout<<finalpath.at(1)->name<<endl;*/
-    //nm->print_all_e();
-    
+    nm->print_all_e();
+    nm->print_all_v();
    
     
     Gplot *gp = new Gplot();

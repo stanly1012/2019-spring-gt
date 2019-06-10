@@ -7,6 +7,7 @@
 #include "path.h"
 #include <vector>
 #include <string>
+#include <cmath>
 using namespace std;
 
 // create NetworkManager first
@@ -25,6 +26,7 @@ int main(int argc, char** argv){
     vector<Vertex*> oddvertex;
     vector<Vertex*> finalpath;
     vector<Vertex*> recordpath;
+    vector<Vertex*> havepath;
     vector<Vertex*> result;
     nm->interpret("topo.txt");
  /////////////////////////////////////////////catch vertex
@@ -52,21 +54,60 @@ int main(int argc, char** argv){
     }
 ////////////////////////////////////////////////////add the edge between two odd vertex
    
-   while(a<oddvertex.size()){
+  while(a<oddvertex.size()){
     nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
     a+=2;
     }
+//////////////////////////////////////////add the edge with dijkstra
+    /*cout<<"number of odd:"<<oddvertex.size()<<endl;
+    if(oddvertex.size()==2){
+        nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
+        }
+    else{
+        for(int j=0; j<vertexcount; j++){
+            for(int k=0; k<vertexcount; k++){
+                int pathdistance[10];
+                int q;
+                if(nm->connected(oddvertex.at(j)->name,name.at(k)->name)==0){                
+                    havepath.push_back(name[k]);
+                    pathdistance[q]=j+1;
+                    q=+1;
+                    nm->linkdown(oddvertex[j],name[k]);
+                    nm->linkdown(name[k],oddvertex[j]);
+                    
+                    cout<<"path vertex size:"<<havepath.size()<<endl;                
+                    cout<<"distance:"<<pathdistance[0]<<endl;
+                    cout<<"distance:"<<pathdistance[1]<<endl;
+                    cout<<"distance:"<<pathdistance[2]<<endl;
+                }
 
-    
+            }
+        }
+                    cout<<"path vertex:"<<havepath.at(0)->name<<endl;
+                    cout<<"path vertex:"<<havepath.at(1)->name<<endl;
+                    cout<<"path vertex:"<<havepath.at(2)->name<<endl;
+                    cout<<"path vertex:"<<havepath.at(3)->name<<endl;
+                    cout<<"path vertex:"<<havepath.at(4)->name<<endl;
+                    cout<<"path vertex:"<<havepath.at(5)->name<<endl;
+                    cout<<"path vertex:"<<havepath.at(6)->name<<endl;
+        
+    }*/
+                    
+                    
 ////////////////////////////////////////euler path
 
    while(b<vertexcount){    
         int q=0;
         int k;
         for(k=0; k<vertexcount; k++){
-            if(nm->connected(name[b]->name,name[k]->name)==0){
+            if(nm->connected(name[b]->name,name[k]->name)==0){                
                 recordpath.push_back(name[b]);
-                nm->linkdown(name[b],name[k]);  
+                if(nm->connected_d(name[b]->name,name[k]->name)==0){
+                    nm->linkdown(name[b],name[k]);
+                }
+                else if(nm->connected_d(name[k]->name,name[b]->name)==0){
+                    nm->linkdown(name[k],name[b]);
+                }
                 break;
             } 
             else if (nm->elist==0){
@@ -83,7 +124,9 @@ int main(int argc, char** argv){
         }
         cout<<"whether repeat or the end:"<<q<<endl;
         if(q==1){
-            b=recordpath.size();
+            int a;
+            a=recordpath.size();
+            b=abs(k-a);
             cout<<"repeat b:"<<b<<endl;
         }
         else if(q==2){
@@ -114,6 +157,8 @@ int main(int argc, char** argv){
     cout<<"final result:"<<result.at(6)->name<<endl;
     cout<<"final result:"<<result.at(7)->name<<endl;
     cout<<"final result:"<<result.at(8)->name<<endl;
+    cout<<"final result:"<<result.at(9)->name<<endl;
+    cout<<"final result:"<<result.at(10)->name<<endl;
 /////////////////////////////////////////////// 
 
     /*cout<<degree[0]<<endl;
@@ -129,12 +174,12 @@ int main(int argc, char** argv){
     cout<<recordpath.at(4)->name<<endl;
     cout<<recordpath.at(5)->name<<endl;
     cout<<recordpath.at(6)->name<<endl;
-    cout<<recordpath.at(7)->name<<endl;*/
-    //cout<<recordpath.at(8)->name<<endl;
+    cout<<recordpath.at(7)->name<<endl;
+    cout<<recordpath.at(8)->name<<endl;*/
     //cout<<recordpath.at(9)->name<<endl;
     /*cout<<"finalpath size:"<<finalpath.size()<<endl;    
-    cout<<finalpath.at(0)->name<<endl;*/
-    //cout<<finalpath.at(1)->name<<endl;
+    cout<<finalpath.at(0)->name<<endl;
+    cout<<finalpath.at(1)->name<<endl;*/
     //nm->print_all_e();
     
    

@@ -13,9 +13,6 @@ using namespace std;
 // create NetworkManager first
 NetworkManager *nm = new NetworkManager();
 
-
-
-
 int main(int argc, char** argv){
     int vertexcount;
     int b=0;
@@ -59,12 +56,27 @@ int main(int argc, char** argv){
     nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
     a+=2;
     }*/
-//////////////////////////////////////////add the edge with dijkstra
-    cout<<"number of odd:"<<oddvertex.size()<<endl;
-    if(oddvertex.size()==2){
+//////////////////////////////////////////add the edge 
+/*Path *path;
+path=new Path;
+vector<vector<Edge*>> avail_paths;
+path->append(nm->elist);
+for(int a=0; a<oddvertex.size(); a++){
+    for(int b=0; b<oddvertex.size(); b++){
+        avail_paths=path->find_paths(oddvertex.at(0)->name,oddvertex.at(3)->name);
+        
+    }
+
+    
+}   
+    path->debug();*/
+    
+///////////////////////////////////////////////
+  
+    /*if(oddvertex.size()==2){
         nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
         }
-    else if(oddvertex.size()>2){
+    else if(oddvertex.size()>2){*/
         int pathdistance[10];
         for(int j=0; j<oddvertex.size(); j++){
             for(int k=0; k<vertexcount; k++){
@@ -78,7 +90,7 @@ int main(int argc, char** argv){
                         nm->linkdown(name[k],oddvertex[j]);
                     }
                     nm->print_all_e();
-                    cout<<"path vertex size:"<<havepath.size()<<endl;                
+                    cout<<"path vertex size:"<<havepath.size()<<endl; 
                     cout<<"distance:"<<pathdistance[0]<<endl;
                     cout<<"distance:"<<pathdistance[1]<<endl;
                     cout<<"distance:"<<pathdistance[2]<<endl;
@@ -98,7 +110,6 @@ int main(int argc, char** argv){
             for(d=0; d<havepath.size(); d++){
                 if(oddvertex.at(e+1)==havepath.at(d)&&pathdistance[d]==1) {
                     nm->connect(oddvertex.at(e)->name,oddvertex.at(e+1)->name);
-                    
                     break;
                 }
                 else if(oddvertex.at(e+1)==havepath.at(d)&&pathdistance[d]!=1){
@@ -108,38 +119,52 @@ int main(int argc, char** argv){
                         }
                         else{
                             for(int w=0; w<havepath.size(); w++){
-                                if(nm->connected(havepath.at(d)->name,havepath.at(w)->name)==0&&pathdistance[w]==pathdistance[d]-1){
+                                if(nm->connected(oddvertex.at(e+1)->name,havepath.at(w)->name)==0&&pathdistance[w]==pathdistance[d]-1){
                                     //nm->connect(oddvertex.at(e)->name,havepath.at(w)->name);
                                     nm->connect(havepath.at(w)->name,oddvertex.at(e+1)->name);
+                                    for(int u=0; u<havepath.size(); u++){
+                                        if(nm->connected(havepath.at(w)->name,havepath.at(u)->name)==0&&pathdistance[u]==pathdistance[w]-1){
+                                            nm->connect(havepath.at(w)->name,havepath.at(u)->name);
+                                        }    
+                                    
+                                        if(havepath.at(u)==oddvertex.at(e)){
+                                            break;
+                                        }
+                                    }
                                 }
-                                if(havepath.at(w)==oddvertex.at(e)){
-                                    break;
-                                }
-                                /*else{
-                                for(int u=0; u<havepath.size(); u++)
-                                    if(havepath.at(w)->name,havepath.at(u)->name)==0&&pathdistance[u]==pathdistance[w]-1)
-                                    nm->connect(havepath.at(w)->name,havepath.at(u)->name);
-                                }*/
                             }
                         }
                     
-                }  
+                }
+                else{
+                    for(int w=0; w<havepath.size(); w++){
+                        if(nm->connected(oddvertex.at(e)->name,havepath.at(w)->name)==0){
+                            nm->connect(havepath.at(w)->name,oddvertex.at(e)->name);
+                            for(int u=0; u<havepath.size(); u++){
+                                if(nm->connected(havepath.at(w)->name,oddvertex.at(u)->name)==0){
+                                    nm->connect(havepath.at(w)->name,oddvertex.at(u)->name);
+                                }    
+                            
+                             
+                            }
+                        }
+                    }
+                }    
             }
             
-            if(e-d==0){
-                e=e+2;
+            if(d==havepath.size()){
+                e=e+1;
             }    
             else{
-                e=e+1;
+                e=e+2;
             }     
         }
             
 
         
-    }
+   // }
 
 ////////////////////////////////////////euler path
-
    while(b<vertexcount){    
         int q=0;
         int k;
@@ -159,7 +184,7 @@ int main(int argc, char** argv){
                 q=2;
                 break;
             }            
-            else if(k==4){                
+            else if(k==vertexcount-1){                
                 recordpath.erase(recordpath.end()-1);
                 finalpath.push_back(name[b]);
                 q=1;
@@ -182,57 +207,20 @@ int main(int argc, char** argv){
         }
  
     }
-    
+
     for(int v=0; v<finalpath.size(); v++){
         result.insert(result.begin(),finalpath.at(v));
+        
     }
     
     for(int w=recordpath.size()-1; w>-1; w--){
         result.insert(result.end(),recordpath.at(w));
+        
     }
-    
-    cout<<"final result size:"<<result.size()<<endl;
-    cout<<"final result:"<<result.at(0)->name<<endl;
-    cout<<"final result:"<<result.at(1)->name<<endl;
-    cout<<"final result:"<<result.at(2)->name<<endl;
-    cout<<"final result:"<<result.at(3)->name<<endl;
-    cout<<"final result:"<<result.at(4)->name<<endl;
-    cout<<"final result:"<<result.at(5)->name<<endl;
-    cout<<"final result:"<<result.at(6)->name<<endl;
-    cout<<"final result:"<<result.at(7)->name<<endl;
-    cout<<"final result:"<<result.at(8)->name<<endl;
-    cout<<"final result:"<<result.at(9)->name<<endl;
-    cout<<"final result:"<<result.at(10)->name<<endl;
-    cout<<"final result:"<<result.at(11)->name<<endl;
-/////////////////////////////////////////////// 
-
-    /*cout<<degree[0]<<endl;
-    cout<<degree[1]<<endl;
-    cout<<degree[2]<<endl;
-    cout<<degree[3]<<endl;
-    cout<<degree[4]<<endl;*/
-    /*cout<<"recordpath size:"<<recordpath.size()<<endl;
-    cout<<recordpath.at(0)->name<<endl;
-    cout<<recordpath.at(1)->name<<endl;
-    cout<<recordpath.at(2)->name<<endl;
-    cout<<recordpath.at(3)->name<<endl;
-    cout<<recordpath.at(4)->name<<endl;
-    cout<<recordpath.at(5)->name<<endl;
-    cout<<recordpath.at(6)->name<<endl;
-    cout<<recordpath.at(7)->name<<endl;
-    cout<<recordpath.at(8)->name<<endl;*/
-    //cout<<recordpath.at(9)->name<<endl;
-    /*cout<<"finalpath size:"<<finalpath.size()<<endl;    
-    cout<<finalpath.at(0)->name<<endl;
-    cout<<finalpath.at(1)->name<<endl;*/
-    nm->print_all_e();
-    nm->print_all_v();
-   
-    
-    Gplot *gp = new Gplot();
-    gp->gp_add(nm->elist);
-    gp->gp_dump(false);
-    gp->gp_export("plot");
+    cout<<"final path:";
+    for(int f=0; f<result.size(); f++){
+        cout<<result.at(f)->name<<"->";
+    }    
 
     return 0;
 }

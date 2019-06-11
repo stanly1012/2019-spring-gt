@@ -65,9 +65,9 @@ int main(int argc, char** argv){
         nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
         }
     else if(oddvertex.size()>2){
+        int pathdistance[10];
         for(int j=0; j<oddvertex.size(); j++){
             for(int k=0; k<vertexcount; k++){
-                int pathdistance[10];
                 if(nm->connected(oddvertex.at(j)->name,name.at(k)->name)==0){                
                     havepath.insert(havepath.end(),name[k]);
                     pathdistance[havepath.size()-1]=j+1;
@@ -96,10 +96,34 @@ int main(int argc, char** argv){
         while(e<oddvertex.size()-1){
             int d;
             for(d=0; d<havepath.size(); d++){
-                if(oddvertex.at(e+1)==havepath.at(d)) {
+                if(oddvertex.at(e+1)==havepath.at(d)&&pathdistance[d]==1) {
                     nm->connect(oddvertex.at(e)->name,oddvertex.at(e+1)->name);
+                    
                     break;
                 }
+                else if(oddvertex.at(e+1)==havepath.at(d)&&pathdistance[d]!=1){
+                        if(nm->connected(oddvertex.at(e)->name,oddvertex.at(e+1)->name)==0){
+                            nm->connect(oddvertex.at(e)->name,oddvertex.at(e+1)->name);
+                            break;
+                        }
+                        else{
+                            for(int w=0; w<havepath.size(); w++){
+                                if(nm->connected(havepath.at(d)->name,havepath.at(w)->name)==0&&pathdistance[w]==pathdistance[d]-1){
+                                    //nm->connect(oddvertex.at(e)->name,havepath.at(w)->name);
+                                    nm->connect(havepath.at(w)->name,oddvertex.at(e+1)->name);
+                                }
+                                if(havepath.at(w)==oddvertex.at(e)){
+                                    break;
+                                }
+                                /*else{
+                                for(int u=0; u<havepath.size(); u++)
+                                    if(havepath.at(w)->name,havepath.at(u)->name)==0&&pathdistance[u]==pathdistance[w]-1)
+                                    nm->connect(havepath.at(w)->name,havepath.at(u)->name);
+                                }*/
+                            }
+                        }
+                    
+                }  
             }
             
             if(e-d==0){

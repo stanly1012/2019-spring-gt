@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <fstream>
 using namespace std;
 
 // create NetworkManager first
@@ -60,13 +61,6 @@ int main(int argc, char** argv){
     }
 ////////////////////////////////////////////////////add the edge between two odd vertex
    
-  /*while(a<oddvertex.size()){
-    nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
-    a+=2;
-    }*/
-//////////////////////////////////////////add the edge 
-
-  
     if((oddvertex.size()==2)&&(nm->connected(oddvertex.at(0)->name,oddvertex.at(1)->name)==0)){
         nm->connect(oddvertex[a]->name,oddvertex[a+1]->name);
         }
@@ -142,6 +136,19 @@ int main(int argc, char** argv){
                             nm->connect(havepath.at(w)->name,oddvertex.at(e+1)->name);
                             break;   
                         }
+                       /* else if(nm->connected(oddvertex.at(e)->name,havepath.at(w)->name)==0
+                        &&nm->connected(oddvertex.at(e+1)->name,havepath.at(w)->name)!=0){
+                            for(int j=0; j<havepath.size(); j++){
+                                if(nm->connected(havepath.at(j)->name,oddvertex.at(e+1)->name)==0
+                                &&nm->connected(havepath.at(w)->name,havepath.at(j)->name)==0){
+                                    nm->connect(havepath.at(w)->name,oddvertex.at(e)->name);
+                                    nm->connect(havepath.at(j)->name,oddvertex.at(e+1)->name);
+                                    nm->connect(havepath.at(j)->name,havepath.at(w)->name);
+                                    break;
+                                }
+                            }
+                            break;
+                        }*/
                     }
                     break; 
                 }    
@@ -163,8 +170,8 @@ int main(int argc, char** argv){
 ////////////////////////////////////////euler path
    while(b<vertexcount){    
         int q=0;
+        int o=0;
         int k;
-        int a;
         for(k=0; k<vertexcount; k++){
             if(nm->connected(name[b]->name,name[k]->name)==0){                
                 recordpath.push_back(name[b]);
@@ -175,7 +182,7 @@ int main(int argc, char** argv){
                 else if(nm->connected_d(name[k]->name,name[b]->name)==0){
                     nm->linkdown(name[k],name[b]);
                 }
-                a=b;
+                
                 break;
             } 
             else if (nm->elist==0){
@@ -183,21 +190,28 @@ int main(int argc, char** argv){
                 q=2;
                 break;
             }            
-            else if(k==vertexcount-1){                
-                recordpath.erase(recordpath.end()-1);
-                finalpath.push_back(name[b]);
-                q=1;
+            else if(k>=vertexcount-1){ 
+                    cout<<"repeat b:"<<b<<endl;
+                    finalpath.push_back(name[b]);
+                    q=1; 
                 break;
             }
         }
         cout<<"whether repeat or the end:"<<q<<endl;
-        
-        
-        //cout<<k<<endl;
-        //cout<<a<<endl;
+
         if(q==1){
-            b=a;
-            cout<<"repeat b:"<<b<<endl;
+            Vertex* lastrecordpath;
+            int p=recordpath.size()-1;
+            lastrecordpath=recordpath.at(p);
+            int f;
+            for(f=0; f<name.size(); f++){
+                if(name.at(f)==lastrecordpath)
+                    break;
+            }
+            recordpath.erase(recordpath.end()-1);
+            cout<<"repeat f:"<<f<<endl;
+            b=f;
+            
             
         }
         else if(q==2){
@@ -210,13 +224,14 @@ int main(int argc, char** argv){
  
     }
     
+
     for(int v=0; v<finalpath.size(); v++){
         result.insert(result.begin(),finalpath.at(v));
         
     }
-    
+
     for(int w=recordpath.size()-1; w>-1; w--){
-        result.insert(result.end(),recordpath.at(w));
+        result.insert(result.begin(),recordpath.at(w));
         
     }
     cout<<"final path:";
@@ -224,5 +239,13 @@ int main(int argc, char** argv){
         cout<<result.at(f)->name<<"->";
     }    
 
+    string writeFileName="final_result.txt";
+    ofstream out(writeFileName.c_str());
+    for(int i=0; i<result.size(); i++){
+        out<<result.at(i)->name<<"->";
+    }
+    out.close();
+    
+    
     return 0;
 }

@@ -16,10 +16,10 @@ And if have odd vertices, we need to add the edge between two odd vertices, make
 I use Dijkstra's algorithm to find the shortest path between two odd vertices.
 first I find the distance of a vertex to each vertex, and according to the distance find the shortest path between two odd vertices and connect them.
 
-And I use Hierholzer algorithm to find Euler path, first choose a vertex push into stack, walk along the adjacent edge to the next vertex and push the vertex into stack and disconnect the edge that walked, and so on.
-If no edge can walk, pop the vertex from stack and push this vertex into another stack, and go back to the previous vertex continue the step.
+And I use Hierholzer algorithm to find Euler path, first choose a vertex push into stack`recordpath`, walk along the adjacent edge to the next vertex and push the vertex into stack`recordpath` and disconnect the edge that walked, and so on.
+If no edge can walk, pop the vertex from stack`recordpath` and push this vertex into another stack`finalpath`, and go back to the previous vertex continue the step.
 
-Finally, according to the content of stack, we can have our solution.
+Finally, I push the content of stack`recordpath` into stack`finalpath`, according to the content of stack`finalpath`, we can have our solution.
 ### File Name Identification
 * `main.cc`: The main program.
 * `topo.txt`: The input graph.

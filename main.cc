@@ -21,20 +21,13 @@ int main(int argc, char** argv){
     int e=0;
     int degree[10];
     Vertex *node;
-   // Edge* path;
     vector<Vertex*> name;
     vector<Vertex*> oddvertex;
     vector<Vertex*> finalpath;
     vector<Vertex*> recordpath;
     vector<Vertex*> havepath;
-    //vector<Edge*> totalpath;
     nm->interpret("topo.txt");
-        
-    /*path=nm->elist;
-    while(path!=0){
-        totalpath.push_back(path);
-        path=path->next;
-    }*/
+
  /////////////////////////////////////////////catch vertex
     node = nm->get_all_nodes();
     while(node!=0){
@@ -87,12 +80,7 @@ int main(int argc, char** argv){
                     cout<<"distance:"<<pathdistance[havepath.size()-1]<<endl;
                 }
             }
-        }
-        
-        /*for(int c=0; c<(totalpath.size()-havepath.size()); c++){
-            nm->disconnect(nm->elist->head->name,nm->elist->tail->name);   
-        }*/
-        
+        }       
         nm->interpret("topo.txt");
         
         while(e<oddvertex.size()-1){
@@ -261,7 +249,11 @@ int main(int argc, char** argv){
     cout<<"final path:";
     for(int f=0; f<finalpath.size(); f++){
         cout<<finalpath.at(f)->name<<"->";
-    }    
+    }
+    
+    for(int f=0; f<finalpath.size()-1; f++){
+        nm->connect(finalpath.at(f)->name,finalpath.at(f+1)->name);
+    }
 
     string writeFileName="final_result.txt";
     ofstream out(writeFileName.c_str());
@@ -270,6 +262,10 @@ int main(int argc, char** argv){
     }
     out.close();
     
+    Gplot *gp = new Gplot();
+    gp->gp_add(nm->elist);
+    gp->gp_dump(true);
+    gp->gp_export("plot");
     
     return 0;
 }

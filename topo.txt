@@ -1,8 +1,11 @@
 a b
 b c
+c a
 c d
-d a
-b f
-f c
-b e
+d e
+e b
 e c
+e f
+f d
+f g
+g d

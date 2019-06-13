@@ -27,7 +27,10 @@ int main(int argc, char** argv){
     vector<Vertex*> recordpath;
     vector<Vertex*> havepath;
     nm->interpret("topo.txt");
-
+    Gplot *gp = new Gplot();
+    gp->gp_add(nm->elist);
+    gp->gp_dump(true);
+    gp->gp_export("input");
  /////////////////////////////////////////////catch vertex
     node = nm->get_all_nodes();
     while(node!=0){
@@ -262,7 +265,7 @@ int main(int argc, char** argv){
     }
     out.close();
     
-    Gplot *gp = new Gplot();
+    
     gp->gp_add(nm->elist);
     gp->gp_dump(true);
     gp->gp_export("plot");

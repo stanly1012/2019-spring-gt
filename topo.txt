@@ -5,7 +5,3 @@ c d
 d e
 e b
 e c
-e f
-f d
-f g
-g d

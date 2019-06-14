@@ -23,17 +23,5 @@ e->b[label="(0) 2"];
 e [label="e(switch)"];
 c [label="c(switch)"];
 e->c[label="(0) 2"];
-e [label="e(switch)"];
-f [label="f(switch)"];
-e->f[label="(0) 2"];
-f [label="f(switch)"];
-d [label="d(switch)"];
-f->d[label="(0) 2"];
-f [label="f(switch)"];
-g [label="g(switch)"];
-f->g[label="(0) 2"];
-g [label="g(switch)"];
-d [label="d(switch)"];
-g->d[label="(0) 2"];
 
 }

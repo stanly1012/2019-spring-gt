@@ -8,7 +8,7 @@ The Chinese postman problem is a route inspection problem, it wants to find the 
 * It is a closed circuit, and it ends at the same point it starts.
 * It needs to go through every vertex at least once.
  
-And the ideal solution is the Euler path.
+And the ideal solution is the Euler path.This time I completed the undirected Chinese postman solution.
 ### Algorithms and Code Description
 First, we need to find the number of odd vertices, if have no odd vertex that means it is the euler circuit which is the solution to this problem. 
 And if have odd vertices, we need to add the edge between two odd vertices, make the odd vertices turn into the even vertices.
